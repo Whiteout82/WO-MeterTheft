@@ -4,7 +4,7 @@ game 'gta5'
 
 description 'ParknMeter Theft'
 
-version '.8'
+version '.1'
 
 client_scripts {
 	'config.lua',

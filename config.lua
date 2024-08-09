@@ -12,8 +12,8 @@ Config.ModelHashes = {
 }
 
 Config.Cash = 'cash' -- cash, blackmoney, markedbills, dirtymoney
-Config.Payout = {min = 0, max = 100} -- Define a range for payout
-Config.Dispatch = 'default' -- default, cd, ps, other
+Config.Payout = {min = 100, max = 100} -- Define a range for payout
+Config.Dispatch = 'cd' -- default, cd, ps, other
 
 -- If you want a custom alert for ps-dispatch, follow their readme to do so,
 -- and then change the export in the main.lua file.

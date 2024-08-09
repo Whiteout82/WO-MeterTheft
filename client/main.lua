@@ -1,15 +1,13 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
 local function policeAlert()
-    if Config.Dispatch == 'default' then
-        TriggerServerEvent("police:server:PoliceAlert", 'Parking Meter Robbery')
-    elseif Config.Dispatch == 'cd' then
+    if Config.Dispatch == 'cd' then
         local data = exports['cd_dispatch']:GetPlayerInfo()
         TriggerServerEvent('cd_dispatch:AddNotification', {
             job_table = {'police'},
             coords = data.coords,
-            title = '10-15 - Theft In Progress',
-            message = 'A ' .. data.sex .. ' committing theft at ' .. data.street,
+            title = '10-14 - Property Damage',
+            message = 'A ' .. data.sex .. 'is damaging property at' .. data.street,
             flash = 0,
             unique_id = data.unique_id,
             sound = 1,
@@ -18,11 +16,13 @@ local function policeAlert()
                 scale = 1.2,
                 colour = 3,
                 flashes = false,
-                text = '911 - Petty Theft',
+                text = '911 - Property Damage',
                 time = 5,
                 radius = 0,
             }
         })
+    elseif Config.Dispatch == 'default' then
+            TriggerServerEvent("police:server:PoliceAlert", 'Parking Meter Robbery')
     elseif Config.Dispatch == 'ps' then
         exports['ps-dispatch']:SuspiciousActivity()
     elseif Config.Dispatch == 'other' then
@@ -42,8 +42,17 @@ local function delPmeter()
     end
 end
 
+
 local function main()
-    local ped = PlayerPedID()
+    local ped = PlayerPedId()
+    local ped = source
+    if IsPedInAnyVehicle(PlayerPedId())
+        local vehicle = GetVehiclePedIsIn(PlayerPedId())
+        if vehicle = true then
+            TriggerEvent('QBCore:Notify', src, "You can't do that right now")
+            end
+            if vehicle = false then 
+            end
     if exports['ps-inventory']:HasItem('lockpick') then
         exports['ps-ui']:Circle(function(success)
             if success then
@@ -60,33 +69,34 @@ local function main()
                 }, {}, {}, function()
                     TriggerServerEvent('wo-parknmeter-pay')
                     ClearPedTasks(ped)
-                    TriggerServerEvent('wo-parknmeter:server:end', "lockpick", 1)
-                    TriggerEvent(exports['ps-inventory']:RemoveItem('lockpick',1))
+                    TriggerServerEvent('wo-parknmeter:server:end')
                     policeAlert()
                     delPmeter()
-                    
-                    if Config.Cash = 'markedbills' then
-                        TriggerEvent(exports['ps-inventory']:AddItem('markedbills', 'add'))
+                if  Config.Cash == 'markedbills' then
+                    TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items["markedbills"], "add")
                     end
-                    if Config.Cash = 'dirtymoney' then
-                        TriggerEvent(exports['ps-inventory']:AddItem('dirtymoney', 'add'))
+                if  Config.Cash == 'dirtymoney' then
+                    TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items["dirtymoney"], "add")
                     end
-                    if config.Cash = 'blackmoney' then
-                        TriggerEvent(exports['ps-inventory']:AddItem('blackmoney', 'add'))
+                if  Config.Cash == 'blackmoney' then
+                    TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items["blackmoney"], "add")
                     end
                 end, function()
                     ClearPedTasks(ped)
-                end)
-            else
+                end) 
+   
+            else    
                 QBCore.Functions.Notify('You broke the lockpick', 'error', 7500)
                 TriggerServerEvent('wo-parknmeter:server:end')
-                TriggerEvent(exports['ps-inventory']:RemoveItem('lockpick', 1))
+                TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items["lockpick"], "remove", 1)
                 policeAlert()
+            end   
+        end, 3, 10) -- NumberOfCircles, MS 
+            else
+                    QBCore.Functions.Notify("You don't have the right tools", 'error', 7500)
+                end
             end
-        else
-                QBCore.Functions.Notify("You don't have the right equipment", 'error', 7500)
-            end
-        end, 3, 15) -- NumberOfCircles, MS
+
 
         CreateThread(function()
             exports['qb-target']:AddTargetModel(Config.Models, {
