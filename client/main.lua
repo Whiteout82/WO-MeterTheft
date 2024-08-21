@@ -7,7 +7,7 @@ local function policeAlert()
             job_table = {'police'},
             coords = data.coords,
             title = '10-14 - Property Damage',
-            message = 'A ' .. data.sex .. 'is damaging property at' .. data.street,
+            message = 'A ' .. data.sex .. 'is damaging property at ' .. data.street,
             flash = 0,
             unique_id = data.unique_id,
             sound = 1,
@@ -46,12 +46,10 @@ end
 local function main()
     local ped = PlayerPedId()
     local ped = source
-    if IsPedInAnyVehicle(PlayerPedId())
-        local vehicle = GetVehiclePedIsIn(PlayerPedId())
-        if vehicle = true then
+    if IsPedInAnyVehicle(PlayerPedId(), false) then
             TriggerEvent('QBCore:Notify', src, "You can't do that right now")
             end
-            if vehicle = false then 
+            if IsPedInAnyVehicle(PlayerPedID(), true) then
             end
     if exports['ps-inventory']:HasItem('lockpick') then
         exports['ps-ui']:Circle(function(success)
