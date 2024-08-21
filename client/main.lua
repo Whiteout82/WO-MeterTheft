@@ -46,7 +46,7 @@ end
 local function main()
     local ped = PlayerPedId()
     local ped = source
-        elseif exports['ps-inventory']:HasItem('lockpick') then
+        if exports['ps-inventory']:HasItem('lockpick') then
         exports['ps-ui']:Circle(function(success)
             if success then
                 QBCore.Functions.Progressbar('rob_meter', 'Robbing a Parking Meter', 15000, false, true, {
