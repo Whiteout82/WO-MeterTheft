@@ -12,7 +12,7 @@ Config.ModelHashes = {
 }
 
 Config.Cash = 'cash' -- cash, blackmoney, markedbills, dirtymoney
-Config.Payout = {min = 100, max = 100} -- Define a range for payout
+Config.Payout = {min = 0, max = 10} -- Define a range for payout
 Config.Dispatch = 'cd' -- default, cd, ps, other
 
 -- If you want a custom alert for ps-dispatch, follow their readme to do so,

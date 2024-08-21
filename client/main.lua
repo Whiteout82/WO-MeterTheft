@@ -30,7 +30,7 @@ local function policeAlert()
     end
 end
 
---[[local function delPmeter()
+local function delPmeter()
     local ply = PlayerPedId()
     local plyCoords = GetEntityCoords(ply, false)
     for _, v in pairs(Config.ModelHashes) do
@@ -40,7 +40,7 @@ end
             DeleteEntity(closestPark)
         end
     end
-end]]
+end
 
 
 local function main()
@@ -71,7 +71,7 @@ local function main()
                     ClearPedTasks(ped)
                     TriggerServerEvent('wo-parknmeter:server:end')
                     policeAlert()
-                    --delPmeter()
+                    delPmeter()
                 if  Config.Cash == 'markedbills' then
                     TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items["markedbills"], "add")
                     end
@@ -83,22 +83,20 @@ local function main()
                     end
                 end, function()
                     ClearPedTasks(ped)
-                    Citizen.Wait(30000)
                 end) 
    
             else    
-                QBCore.Functions.Notify('You broke the lockpick', 'error', 15000)
+                QBCore.Functions.Notify('You broke the lockpick', 'error', 7500)
                 TriggerServerEvent('wo-parknmeter:server:end')
                 TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items["lockpick"], "remove", 1)
                 policeAlert()
-                Citizen.Wait(15000)
             end   
         end, 3, 10) -- NumberOfCircles, MS 
             else
-                    QBCore.Functions.Notify("You don't have the right tools", 'error', 3000)
+                    QBCore.Functions.Notify("You don't have the right tools", 'error', 7500)
                 end
             end
-            
+
 
         CreateThread(function()
             exports['qb-target']:AddTargetModel(Config.Models, {
@@ -114,4 +112,3 @@ local function main()
                 distance = 1.5 
             })
         end)
-
