@@ -46,12 +46,7 @@ end
 local function main()
     local ped = PlayerPedId()
     local ped = source
-    if IsPedInAnyVehicle(PlayerPedId(), false) then
-            TriggerEvent('QBCore:Notify', src, "You can't do that right now")
-            end
-            if IsPedInAnyVehicle(PlayerPedID(), true) then
-            end
-    if exports['ps-inventory']:HasItem('lockpick') then
+        elseif exports['ps-inventory']:HasItem('lockpick') then
         exports['ps-ui']:Circle(function(success)
             if success then
                 QBCore.Functions.Progressbar('rob_meter', 'Robbing a Parking Meter', 15000, false, true, {
